@@ -22,6 +22,7 @@ var t2_component_1 = require('./components/task2/t2/t2.component');
 var t2_documentation_component_1 = require('./components/task2/t2.documentation/t2.documentation.component');
 var t3_component_1 = require('./components/task3/t3/t3.component');
 var t3_documentation_component_1 = require('./components/task3/t3.documentation/t3.documentation.component');
+var t4_component_1 = require('./components/task4/t4.component');
 var appRoutes = [
     { path: 'home', component: home_component_1.HomeComponent },
     { path: 'task1', component: t1_component_1.Task1Component },
@@ -30,6 +31,7 @@ var appRoutes = [
     { path: 't2-doc', component: t2_documentation_component_1.T2DocComponent },
     { path: 'task3', component: t3_component_1.Task3Component },
     { path: 't3-doc', component: t3_documentation_component_1.T3DocComponent },
+    { path: 'task4', component: t4_component_1.Task4Component },
     { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];
 var AppModule = (function () {
@@ -39,7 +41,7 @@ var AppModule = (function () {
         core_1.NgModule({
             imports: [platform_browser_1.BrowserModule, router_1.RouterModule.forRoot(appRoutes), forms_1.FormsModule, http_1.HttpModule],
             declarations: [app_component_1.AppComponent, home_component_1.HomeComponent, menu_component_1.MenuComponent, t1_component_1.Task1Component,
-                t1_documentation_component_1.T1DocComponent, t2_component_1.Task2Component, t2_documentation_component_1.T2DocComponent, t3_component_1.Task3Component, t3_documentation_component_1.T3DocComponent],
+                t1_documentation_component_1.T1DocComponent, t2_component_1.Task2Component, t2_documentation_component_1.T2DocComponent, t3_component_1.Task3Component, t3_documentation_component_1.T3DocComponent, t4_component_1.Task4Component],
             bootstrap: [app_component_1.AppComponent]
         }), 
         __metadata('design:paramtypes', [])

@@ -12,6 +12,7 @@ import { Task2Component } from './components/task2/t2/t2.component';
 import { T2DocComponent } from './components/task2/t2.documentation/t2.documentation.component';
 import { Task3Component } from './components/task3/t3/t3.component';
 import { T3DocComponent } from './components/task3/t3.documentation/t3.documentation.component';
+import { Task4Component } from './components/task4/t4.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -21,6 +22,7 @@ const appRoutes: Routes = [
   { path: 't2-doc', component: T2DocComponent },
   { path: 'task3', component: Task3Component },
   { path: 't3-doc', component: T3DocComponent },
+  { path: 'task4', component: Task4Component },
   { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];
 
@@ -28,7 +30,7 @@ const appRoutes: Routes = [
 @NgModule({
   imports:      [ BrowserModule, RouterModule.forRoot(appRoutes), FormsModule, HttpModule ],
   declarations: [ AppComponent, HomeComponent, MenuComponent, Task1Component, 
-    T1DocComponent, Task2Component, T2DocComponent, Task3Component, T3DocComponent],
+    T1DocComponent, Task2Component, T2DocComponent, Task3Component, T3DocComponent, Task4Component],
   bootstrap:    [ AppComponent ]
 })
 
