@@ -1,7 +1,7 @@
 # IMEC_Labs_App
 This application was built to comply with a technical test set by IMEC labs.
 
-## Pre-Requisites:
+## Requirements:
 To deploy and correctly execute this application is necessary to previously install the following:
   - [NodeJS](http://tecadmin.net/install-latest-nodejs-npm-on-ubuntu/)
   - [MongoDB](http://www.tutorialspoint.com/articles/how-to-install-mongodb-on-ubuntu-16-04)
