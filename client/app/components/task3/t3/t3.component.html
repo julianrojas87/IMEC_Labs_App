@@ -1,0 +1,146 @@
+<h4>Path finder using the <a href="https://github.com/linkedconnections/client.js">Linked Connection Client</a></h4>
+<hr>
+<p>
+    <span>
+        This tool allows to find possible Connections between two given Stops and a Departure Time. The data set provided
+        for this task contains Connections information only for the following time interval: <mark>1970-Jan-01 00:00</mark> - <mark>1970-Jan-31 00:40</mark>
+        therefore only a Departure Time between such interval will be allowed to be chosen.
+    </span>
+</p>
+<p>
+    <span>
+        Considering that a path search process could take a long time, this tool was restricted to perform a lookup only during the first 24 hours after the given
+        Departure Time. For example if the selected Departure Time is <mark>1970-Jan-05 12:00</mark> then the tool will look for a path until 
+        <mark>1970-Jan-06 12:00</mark>, and if no path is found on this 24 hours interval it will respond with a Path No Found message. 
+    </span>
+</p>
+<hr>
+<div style="margin-left: 100">
+    <div class="row-fluid">
+        <label for="stations" style="font-size: 18">Departure Station:</label>
+        <select id="stations" [(ngModel)]="departure" class="selectpicker" data-live-search="true" data-live-search-placeholder="Enter a Station name">
+            <option>Select a Station</option>
+            <option *ngFor="let station of stations" [ngValue]="station.label">{{station.label}}</option>
+        </select>
+
+        <label for="stations" style="font-size: 18; margin-left: 30;">Arrival Station:</label>
+        <select id="stations" [(ngModel)]="arrival" class="selectpicker" data-live-search="true" data-live-search-placeholder="Enter a Station name">
+            <option>Select a Station</option>
+            <option *ngFor="let station of stations" [ngValue]="station.label">{{station.label}}</option>
+        </select>
+    </div>
+
+    <div class="row-fluid" style="margin-top: 12">
+        <label for="time" style="font-size: 18">Departure Time:</label>
+        <p id="time" style="font-size: 18; display: inline;">
+            <span><mark>1970</mark></span>
+            <span>-</span>
+            <span><mark>JAN</mark></span>
+            <span>-</span>
+            <label for="days" style="font-size: 17;">Day:</label>
+            <select id="days" [(ngModel)]="day" class="selectpicker" data-width="120px">
+                <option>Select a Day</option>
+                <option [ngValue]="01">1</option>
+                <option [ngValue]="02">2</option>
+                <option [ngValue]="03">3</option>
+                <option [ngValue]="04">4</option>
+                <option [ngValue]="05">5</option>
+                <option [ngValue]="06">6</option>
+                <option [ngValue]="07">7</option>
+                <option [ngValue]="08">8</option>
+                <option [ngValue]="09">9</option>
+                <option [ngValue]="10">10</option>
+                <option [ngValue]="11">11</option>
+                <option [ngValue]="12">12</option>
+                <option [ngValue]="13">13</option>
+                <option [ngValue]="14">14</option>
+                <option [ngValue]="15">15</option>
+                <option [ngValue]="16">16</option>
+                <option [ngValue]="17">17</option>
+                <option [ngValue]="18">18</option>
+                <option [ngValue]="19">19</option>
+                <option [ngValue]="20">20</option>
+                <option [ngValue]="21">21</option>
+                <option [ngValue]="22">22</option>
+                <option [ngValue]="23">23</option>
+                <option [ngValue]="24">24</option>
+                <option [ngValue]="25">25</option>
+                <option [ngValue]="26">26</option>
+                <option [ngValue]="27">27</option>
+                <option [ngValue]="28">28</option>
+                <option [ngValue]="29">29</option>
+                <option [ngValue]="30">30</option>
+                <option [ngValue]="31">31</option>
+            </select>
+
+            <label for="hours" style="font-size: 17; margin-left: 20">Hour:</label>
+            <select id="hours" [(ngModel)]="hour" class="selectpicker" data-width="135px">
+                <option>Select an Hour</option>
+                <option [ngValue]="00">00</option>
+                <option [ngValue]="01">01</option>
+                <option [ngValue]="02">02</option>
+                <option [ngValue]="03">03</option>
+                <option [ngValue]="04">04</option>
+                <option [ngValue]="05">05</option>
+                <option [ngValue]="06">06</option>
+                <option [ngValue]="07">07</option>
+                <option [ngValue]="08">08</option>
+                <option [ngValue]="09">09</option>
+                <option [ngValue]="10">10</option>
+                <option [ngValue]="11">11</option>
+                <option [ngValue]="12">12</option>
+                <option [ngValue]="13">13</option>
+                <option [ngValue]="14">14</option>
+                <option [ngValue]="15">15</option>
+                <option [ngValue]="16">16</option>
+                <option [ngValue]="17">17</option>
+                <option [ngValue]="18">18</option>
+                <option [ngValue]="19">19</option>
+                <option [ngValue]="20">20</option>
+                <option [ngValue]="21">21</option>
+                <option [ngValue]="22">22</option>
+                <option [ngValue]="23">23</option>
+            </select>
+            <span>:</span>
+            <label for="minutes" style="font-size: 17;">Minute:</label>
+            <select id="minutes" [(ngModel)]="minute" class="selectpicker" data-width="138px">
+                <option>Select a Minute</option>
+                <option [ngValue]="00">00</option>
+                <option [ngValue]="10">10</option>
+                <option [ngValue]="20">20</option>
+                <option [ngValue]="30">30</option>
+                <option [ngValue]="40">40</option>
+                <option [ngValue]="50">50</option>
+            </select>
+        </p>
+        <p style="margin-left: 400; margin-top: 30;">
+            <button type="button" class="btn btn-primary btn-lg" (click)="findPath($event)">Find Path</button>
+        </p>
+    </div>
+</div>
+
+<div class="loader" *ngIf="loading"></div>
+<br/>
+<div *ngIf="results">
+    <table class="table table-bordered table-striped table-hover">
+        <caption style="font-size: 25; margin-left: 450;">Connections Path</caption>
+        <thead class="thead-inverse">
+            <tr>
+                <th>ID</th>
+                <th>Departure Stop</th>
+                <th>Arrival Stop</th>
+                <th>Departure Time</th>
+                <th>Arrival Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let connection of path">
+                <th>{{connection.id}}</th>
+                <th>{{connection.departureStop}}</th>
+                <th>{{connection.arrivalStop}}</th>
+                <th>{{connection.arrivalTime}}</th>
+                <th>{{connection.departureTime}}</th>
+            </tr>
+        </tbody>
+    </table>
+</div>

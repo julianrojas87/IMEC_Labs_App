@@ -1,0 +1,82 @@
+<div>
+    <h3 style="display: inline">Task 1: </h3>
+    <h4 style="display:inline">
+        <span>Create a script to extract a list of stations and stops with all their properties from this</span>
+        <span><a href="https://www.google.com/url?q=https://cl.ly/1L3R0d3r3F0R&amp;sa=D&amp;ust=1482490644336000&amp;usg=AFQjCNE9tVoBfYbTQUO46hjTUEd8sE9Ciw" target="_blank">Turtle file.</a></span>
+    </h4>
+    <hr>
+    <p>
+        <span>
+            The approach I decided to take to provide a solution for this assigment 
+            was to build a MEAN (Mongo, Express, Angular, Node) Web application which 
+        </span>
+        <span>
+            integrates every solution for each task while giving a nice UI. This also was 
+            made aiming to present evidence of my software developemt skills on the NodeJS environment.
+        </span>
+    </p>
+    <p>
+        <span>
+            Specifically for Task 1, my approach consisted on parsing the RDF-Turtle data set 
+            into a data model stored on a Mongo DB that allowed me to query it an extract the information I needed.
+            The steps I took to achive this are described next: 
+        </span>
+    </p>
+    <ol start="1">
+        <li>
+            <span>The first step was to find a RDF-Turtle parser and after looking over the Web I found the </span>
+            <span><a href="https://github.com/RubenVerborgh/N3.js" target="_blank">Ruben Verborgh N3 parser.</a></span>
+            <span>
+                This parser provides a easy to use tool for reading turtle files. It starts identifying all the 
+                <mark>@prefix </mark>elements defined and then 
+            </span>
+            <span>works in a loop giving on each iteration a JS object like this: <mark>&#123;subject: '', predicate: '', object: ''&#125;</mark>.</span>
+        </li>
+        <br/>
+        <li>
+            <span>Next it was necessary to know which were the different entities that the turtle data set was describing. </span>
+            <span>
+                For this I used the parser to go over the data set and discover every different type of entity and its properties. 
+                Knowing that every time the predicate <mark>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</mark>, also put as a simple <mark>'a'</mark>  
+                was present it was declaring a new entity, allowed me to identify 6 different entities and their relations as shown next:
+            </span>
+            <img style="width: 800; position: relative; top: 20; left: 150; margin-bottom: 25;" src="resources/img/erd.png">
+        </li>
+        <br/>
+        <li>
+            <p>
+                <span>Once I had the model, the next step was to build the algorithm that will map every entity and its properties into a MongoDB collection. </span>
+                <span>Since on every iteration the parser returns an object, I could take the subject parameter to identify to which entity does a property belongs. </span>
+                <span>
+                    I noticed that through out the data set almost every entity was grouped with its properties, which made it easy to parse it. 
+                    But there were some properties that were present outside its entity group and for them I had to identify to which type of entity it belonged 
+                    and then assing it to the corresponding entity.
+                </span>
+            </p>
+            <p>
+                <span>
+                    This algorithm will build every entity and store it in an array, having a different array for every type of entity. This process will continue
+                    until the whole data set has been parsed and then it will proceed to store every array in a MongoDB collection. Before it starts the parsing 
+                    process, the algorithm will check the MongoDB and if it does not find any data in it, will proceed to parse the data-set. Such verification
+                    will be done every time the node application is started. The algorithm is implemented on the <mark>parser/turtle-parser.js</mark> file.
+                </span>
+            </p>
+        </li>
+        <br/>
+        <li>
+            <p>
+                <span>
+                    Having a MongoDB collection for every entity makes much easier to obtain a complete list of Stations and Stops through a 
+                    Mongo parser such as mongoose. Therefore, I built a REST api, using express, that allowed me to query the DB and obtain the data.
+                </span>
+            </p>
+            <p>
+                <span>
+                    Finally for presenting the data I created a UI using Angular2 and Bootstrap where I consume the REST api and display the lists of 
+                    Stations and Stops. 
+                </span>
+            </p>
+        </li>
+    </ol>
+</div>
+<div style="margin-top: 100;"></div>

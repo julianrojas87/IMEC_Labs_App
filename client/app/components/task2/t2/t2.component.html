@@ -1,0 +1,35 @@
+<h4>To view a specific Stop detail select the name of the Station it belongs to:</h4>
+<br/><br/>
+<div class="row-fluid">
+    <label for="stations" style="font-size: 18">Stations:</label>
+    <select id="stations" [(ngModel)]="name" (ngModelChange)="onSelectStation($event)" class="selectpicker" data-live-search="true"
+        data-live-search-placeholder="Enter a Station name">
+        <option *ngFor="let station of stations" [ngValue]="station.label">{{station.label}}</option>
+    </select>
+    <span style="display: inline; margin-left: 12">To comply with the task 2 select <mark>Hamler</mark> and <mark>Trumann-Rohrersville</mark></span>
+</div>
+<br/><br/>
+<div>
+    <table class="table table-bordered table-striped table-hover">
+        <thead class="thead-inverse">
+            <tr>
+                <th>ID</th>
+                <th>Code</th>
+                <th>Parent Station (Name)</th>
+                <th>Platform Code</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{stop.id}}</td>
+                <td>{{stop.code}}</td>
+                <td>{{name}}</td>
+                <td>{{stop.platformCode}}</td>
+                <td>{{stop.lat}}</td>
+                <td>{{stop.long}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

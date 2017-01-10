@@ -1,0 +1,51 @@
+<div>
+    <h3 style="display: inline">Task 2: </h3>
+    <h4 style="display:inline">
+        <span>Create a script that will give us the identifiers for the stop Hamler platform 0 and for the stop Trumann-Rohrersville platform 0.</span>
+    </h4>
+    <hr>
+    <p>
+        <span>
+            As mentioned in the documentation of Task 1, having the information of the data set available as a data model
+            in a Mongo DB makes it very easy to access it. For this task we have an input parameter: <mark>Station.label</mark>,
+            which will be used to identify the Stop associated to that Station.   
+        </span>
+    </p>
+    <p>
+        <span>
+            As determined in the Task 1 the relation between Stops an Stations is given by the <mark>Stop.parentStation</mark> parameter
+            which points to a Station ID &#40;<mark>Station.id</mark>&#41;. Therefore, having the name of a Station allows to find the Station ID and then
+            use that parameter to find the Stop with the same Parent Station.    
+        </span>
+        <img style="width: 500; position: relative; left: 300; margin-top: 10 ;margin-bottom: 10;" src="resources/img/station-stop.png">
+    </p>
+    <p>
+        <span>
+            For this, I exposed a function in the Express REST api that has the following URL: <mark>/api/stop/:name</mark>. Where ':name' is the 
+            name of the Station. The function returns a JSON object containing all the information of the related Stop. Such function can be found on 
+            the <mark>/routes/tasks.js</mark> script.    
+        </span>
+    </p>
+    <p>
+        <span>
+            On the Front-End side I decided to implement a general UI that allow to retrieve the Stop information not only for the requested Stations
+            in the task but for all the Stations present in the data-set. For this, a bootstrap-select is used containing all the Stations names. When
+            a Station name is selected the described REST api method is invoked and a table like structure is filled with the retrieved Stop data. Next
+            are some screen captures for the requested Stations on this task (Hamler and Trumann-Rohrersville):
+        </span>
+    </p>
+    <hr>
+    <p>
+        <span>
+            <h4>Hamler:</h4>
+            <img style="width: 900; position: relative; left: 100" src="resources/img/hamler.png">
+        </span>
+    </p>
+    <hr>
+    <p>
+        <span>
+            <h4>Trumann-Rohrersville:</h4>
+            <img style="width: 900; position: relative; left: 100" src="resources/img/trumann.png">
+        </span>
+    </p>
+</div>

@@ -1,0 +1,51 @@
+<ul class="nav nav-pills nav-justified">
+  <li class="active"><a data-toggle="pill" href="#stations" style="font-size: 18;">Stations</a></li>
+  <li><a data-toggle="pill" href="#stops" style="font-size: 18;">Stops</a></li>
+</ul>
+
+<div class="tab-content">
+  <div id="stations" class="tab-pane fade in active">
+    <table class="table table-bordered table-striped table-hover">
+      <thead class="thead-inverse">
+        <tr>
+          <th>ID</th>
+          <th>Station Name</th>
+          <th>Latitude</th>
+          <th>Longitude</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let station of stations">
+          <td>{{station.id}}</td>
+          <td>{{station.label}}</td>
+          <td>{{station.lat}}</td>
+          <td>{{station.long}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div id="stops" class="tab-pane fade">
+    <table class="table table-bordered table-striped table-hover">
+      <thead class="thead-inverse">
+        <tr>
+          <th>ID</th>
+          <th>Code</th>
+          <th>Parent Station (ID)</th>
+          <th>Platform Code</th>
+          <th>Latitude</th>
+          <th>Longitude</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let stop of stops">
+          <td>{{stop.id}}</td>
+          <td>{{stop.code}}</td>
+          <td>{{stop.parentStation}}</td>
+          <td>{{stop.platformCode}}</td>
+          <td>{{stop.lat}}</td>
+          <td>{{stop.long}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

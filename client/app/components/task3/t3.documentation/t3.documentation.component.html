@@ -1,0 +1,106 @@
+<div>
+    <h3 style="display: inline">Task 3: </h3>
+    <h5 style="display:inline">
+        <span>We have also published this dataset in the way advocated by Linked Connections (</span>
+        <span><a href="http://linkedconnections.org" target="_blank">http://linkedconnections.org</a></span>
+        <span>) at </span>
+        <span>
+            <a href="http://server02.openknowledge.be:8082/connections/?departureTime%3D1970-01-01T12:00" target="_blank">http://server02.openknowledge.
+                <wbr>be:8082/connections/?<wbr>departureTime=1970-01-01T12:00
+            </a>
+        </span>
+        <span><wbr>. Use the </span>
+        <span><a href="https://github.com/linkedconnections/client.js" target="_blank">Linked Connections Client</a></span>
+        <span> to find a route from Hamler platform 0 to Trumann-Rohrersville platform 0. Did you find a result? Document step by step what you did.</span>
+    </h5>
+    <hr>
+    <p>
+        <span>
+            To answer this task's question: Yes I was able to find a result. Follwing is the description of the steps I took to get it:   
+        </span>
+    </p>
+    <ol start="1">
+        <li>
+            <span>The first thing I did was to examine the response of the given example 
+                <a target="_blank" href="http://server02.openknowledge.be:8082/connections/?departureTime=1970-01-01T12:00">URL</a>
+            </span>
+            <span> and realize it gives a set of Connections for a given Departure Time and those Connections were expressed using Hydra format.</span>
+        </li>
+        <br/>
+        <li>
+            <span>
+                My next step was to analyze and test the 
+                <a href="https://github.com/linkedconnections/client.js" target="_blank">Linked Connections Client</a>.
+                After testing this client, I realized that it takes three parameters (departureStop, arrivalStop and departureTime) and queries the 
+                data set looking for a connection. If it does not find one it changes the Departure Time adding 10 minutes and queries again. The client
+                continues this process until it finds a connection that has not to be necessarily a direct one, it can find a path from the origin 
+                to the destination going through several stops. 
+            </span>
+        </li>
+        <br/>
+        <li>
+            <span>
+                Knowing this, I proceeded to integrate the client into this application and exposed a function that allows to use it, based on the 
+                documentation example. The client is present in the <mark>linked_connections_client/lc_client.js</mark> file. 
+            </span>
+        </li>
+        <br/>
+        <li>
+            <span>
+                I noticed that the client will continue to search for a Connection indefinitely, therefore it was necessary to define a stop condition 
+                in case no Connection was present in the data set for the givem parameters. The first thing I did was to manually determine what was the extent 
+                of the data set, finding that the last Departure Date that returns Connections data was <mark>1970-JAN-31 00:40</mark>. Having this, I set the
+                client search function to stop if that date was exceeded. 
+            </span>
+        </li>
+        <br/>
+        <li>
+            <span>
+                Another thing I noticed was that if there are no Connections for a given set of parameters, it will take a considerable amount of time 
+                to query every 10 minutes through out the month specially if the initial Departure time was at the begining of the month. Considering this
+                I decided to define another stop condition setting a 24 hours limit for the client to look for a Connection. Meaning that if the client does
+                not find a Connection in the following 24 hours of the initial Dearture Time, it will stop looking.  
+            </span>
+        </li>
+        <br/>
+        <li>
+            <span>
+                Having integrated the client into the application and exposed it through my REST api, I proceeded to build the UI. The requirement for this task
+                asks to look for connections from <mark>Hamler platform 0</mark> to <mark>Trumann-Rohrersville platform 0</mark>, but I decided to implement a
+                more generic function that allowed to look for Connections between any of the Stations defined by the data set. Also my UI allows to specify
+                the Departure Time by selecting the date and time (restricted to January 1970 only).  
+            </span>
+        </li>
+        <br/>
+        <li>
+            <span>
+                Once the UI was implemented I focused on presenting the information returned by the client. When the client finds a path between two stations
+                it returns an array of Connection objects with a set of parameters. Among those parameters are the departure and arrival stops, but only their
+                IDs, and presenting that data directly does not transmit much information to the user. Knowing that a Stop has a Parent Station, I decided to take
+                the stop IDs returned by the client for each Connection and retrieve the related Station from my Mongo DB to present a more clear information
+                regarding the Path found.  
+            </span>
+        </li>
+        <br/>
+        <li>
+            <span>
+                Finally, here I present a screenshot of the result obtained for a query using the stations requested by this task and a Departure Time of 
+                <mark>1970-JAN-01 09:00</mark>.  
+            </span>
+        </li>
+    </ol>
+    <p style="margin-top: 50; margin-bottom: 70">
+        <span>
+            <h4>Hamler -> Trumann-Rohrersville (1970-JAN-01 09:00)</h4>
+            <img style="width: 900; position: relative; left: 100" src="resources/img/task3.png">
+        </span>
+    </p>
+    <p style="display: inline;">
+        <span style="font-weight: bold">**Note: </span>
+        <span>
+            After making several tests with the client with different parameters I noticed that in some cases the client froze and never returned.
+            Unfortunately I was not able to determine what was causing the freezing or to implement a exception handler for this scenario.
+        </span>
+    </p>
+</div>
+<div style="margin-top: 100;"></div>
