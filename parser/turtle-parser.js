@@ -44,7 +44,7 @@ module.exports.initDataModel = function(callback) {
             callback(err);
         } 
         if(count <= 0) {
-            console.log('Begining data set parsing process, please wait until it is finished...');
+            console.log('Beginning dataset parsing process, please wait until it is finished...');
             parseDataSet(function() {
                 callback();
             });
