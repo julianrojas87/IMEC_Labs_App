@@ -44,6 +44,7 @@ module.exports.initDataModel = function(callback) {
             callback(err);
         } 
         if(count <= 0) {
+            console.log('Begining data set parsing process, please wait until it is finished...');
             parseDataSet(function() {
                 callback();
             });
@@ -64,7 +65,7 @@ function parseDataSet(callback) {
         }
 
         var t0 = new Date().getTime();
-        console.log('Begining data set parsing process...');
+
         parser.parse(data.toString(), function (error, triple, prefixes) {
             if (triple) {
                 if(triple.predicate == constants.rdf + 'type') {
@@ -120,6 +121,10 @@ function parseDataSet(callback) {
                 });
                 insertConnections(connections, function(result) {
                     console.log(result);
+                    console.log('-------------------------------------------------------------------------');
+                    console.log('Parsing process completed successfuly!!');
+                    console.log('Please open http://localhost:3000 in your browser to start using the App');
+                    console.log('-------------------------------------------------------------------------');
                 });
 
                 callback();
